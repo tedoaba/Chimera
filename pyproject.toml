@@ -1,0 +1,7 @@
+[project]
+name = "chimera"
+version = "0.1.0"
+description = "Chimera is a platform for autonomous AI influencer agents that perceive online environments, generate content, interact on social platforms, and manage on-chain economic activity at scale."
+readme = "README.md"
+requires-python = ">=3.12.12, <4.0"
+dependencies = []
