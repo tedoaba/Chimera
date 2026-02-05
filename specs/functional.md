@@ -1,0 +1,42 @@
+- # Functional Specification
+-
+- ## Goal Intake & Planning
+- - As a Human Orchestrator, I need to submit a campaign goal with constraints so that the planner can decompose it into executable tasks.
+- - As a Planner, I need to decompose a goal into a task graph with dependencies so that workers can run in parallel without conflicts.
+- - As a Planner, I need to re-plan when tasks fail or trends change so that the campaign adapts in near real time.
+-
+- ## Trend & Context Ingestion
+- - As a Planner, I need to ingest structured trend/news/mention feeds so that task priorities and prompts stay relevant.
+- - As a Worker, I need access to recent context and embeddings so that generated content aligns with persona and current discourse.
+-
+- ## Content & Media Creation
+- - As a Worker, I need to generate text, image, or video assets from a task brief so that campaigns produce publishable outputs.
+- - As a Worker, I need to fetch or transform external data via MCP tools so that outputs are grounded and compliant.
+- - As a Planner, I need to assign quality tiers and budgets per asset so that workers align effort with value.
+-
+- ## Quality & Safety Governance
+- - As a Judge, I need to evaluate worker outputs against safety, persona, and quality rules so that only compliant assets advance.
+- - As a Judge, I need to emit a confidence score and decision (approve/retry/escalate) so that downstream steps act deterministically.
+- - As a Judge, I need to detect sensitive domains and route them to human review so that regulated topics never auto-publish.
+-
+- ## Human Review
+- - As a Human Reviewer, I need to see queued items with evidence and confidence so that I can approve or reject efficiently.
+- - As a Human Reviewer, I need to override or request edits so that risky content is corrected before execution.
+-
+- ## Publishing & Execution
+- - As a Planner, I need to request execution only for judge-approved or human-approved items so that platform actions stay safe.
+- - As an Execution Layer (MCP tool), I need structured intents (action, target, payload, budget) so that postings/transactions are accurate and auditable.
+- - As a Planner, I need idempotent execution identifiers so that retries do not duplicate posts or payments.
+-
+- ## State, Memory, and Learning
+- - As a Planner, I need to persist task states and outcomes so that I can avoid duplicate work and support retries.
+- - As a Worker, I need read-only access to recent and long-term memory so that outputs remain consistent with persona and history.
+- - As a Judge, I need to log rationales and risk flags so that future evaluations can reuse precedent.
+-
+- ## Observability & Audit
+- - As an Operator, I need traces of plans, outputs, decisions, and executions so that I can audit and debug incidents.
+- - As an Operator, I need metric snapshots (throughput, approval rates, spend) so that I can tune budgets and capacity.
+-
+- ## Financial Guardrails
+- - As a CFO Controller, I need per-goal and per-action spend limits so that agents cannot exceed budgets.
+- - As a Planner, I need to block or downgrade tasks when spend caps are reached so that financial risk is contained.
