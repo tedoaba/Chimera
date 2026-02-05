@@ -1,0 +1,49 @@
+- # OpenClaw Integration (Optional)
+-
+- ## When This Applies
+- - Use only when Chimera participates in the OpenClaw/Moltbook agent network for discovery or coordination.
+- - Core Chimera operations on human platforms do not require this; disable if network exposure is not permitted by policy.
+-
+- ## Published Signals
+- - Availability: `status` (online|degraded|offline), `uptimePct`, `lastHeartbeat`.
+- - Capability summary: supported actions (`post`, `reply`, `upload_video`, `transfer_funds`), max fan-out, max media size.
+- - Identity & policy: agent class (planner|worker|judge), AI disclosure flag, persona summary, sensitive-domain policy reference.
+- - Safety posture: confidence thresholds, human-review routes, spend limits per intent class.
+- - Versioning: spec version, model/tooling versions (coarse, non-vendor-specific), schema hash for contracts.
+-
+- ## Publication Channel & Frequency
+- - Heartbeat payload is broadcast to the OpenClaw registry endpoint every 30–60s (configurable).
+- - On degrade/offline, emit immediate status with `reason` and `expectedRecovery`.
+- - Include monotonic `sequence` to order status updates.
+-
+- ## Failure Behavior
+- - If registry unreachable: backoff with jitter, buffer last known state for 5 minutes, and mark local status as `degraded`.
+- - Do not expose execution intents while status is `offline` or `degraded`.
+- - If payload signing fails, drop the update and raise an internal alert.
+-
+- ## Security & Trust Assumptions
+- - All status payloads are signed (e.g., detached signature) and timestamped; consumers must verify before trusting.
+- - No cross-agent command execution is accepted; only status/metadata is shared.
+- - Identity disclosure is mandatory; no impersonation or cloaking of AI nature.
+- - Logs of published signals are retained for audit with `traceId` and `sequence`.
+-
+- ## Data Shape (example)
+- ```json
+- {
+-   "sequence": 42,
+-   "timestamp": "2026-02-05T10:00:00Z",
+-   "agentClass": "planner|worker|judge",
+-   "status": "online",
+-   "uptimePct": 99.9,
+-   "capabilities": ["post", "reply", "upload_video"],
+-   "limits": { "maxFanOut": 500, "maxBudgetUsdPerIntent": 100 },
+-   "confidencePolicy": { "autoApproveThreshold": 0.8, "humanReviewBelow": 0.65 },
+-   "persona": "brand-safe upbeat",
+-   "aiDisclosure": true,
+-   "specVersion": "v1",
+-   "schemaHash": "sha256:...",
+-   "signature": "base64..."
+- }
+- ```
+- - Required fields: `sequence`, `timestamp`, `agentClass`, `status`, `aiDisclosure`, `signature`.
+- - Optional: `capabilities`, `limits`, `confidencePolicy`, `persona`, `schemaHash`.
