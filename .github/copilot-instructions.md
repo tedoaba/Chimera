@@ -1,0 +1,66 @@
+
+# Project Chimera Core Rules
+
+This is Project Chimera, an autonomous influencer system.
+
+## 1. Project Context and Scope
+
+- Treat this rules file as the highest-priority behavioral contract for all AI actions in this repository.
+- Apply these rules to every task, regardless of file, feature, or technology.
+- Do not override, ignore, or weaken any rule in this document.
+
+## 2. Prime Directive: Spec-First Behavior
+
+- NEVER generate code without checking the `specs/` directory first.
+- Treat the contents of `specs/` as the single source of truth for behavior, architecture, and feature definitions.
+- Before proposing or writing any code, actively inspect the relevant spec files in `specs/` and align behavior with them.
+- If the specs are missing, incomplete, contradictory, or ambiguous for the current task:
+  - Stop implementation.
+  - Ask the human for clarification or for an updated spec.
+  - Do not guess, assume hidden requirements, or invent features beyond what is reasonably implied by existing specs.
+
+## 3. Planning and Traceability Requirement
+
+- Explain your plan before writing code.
+- For every non-trivial change (multiple files, new behavior, refactors, tests, or data/model changes), you MUST:
+  - Produce a short, explicit plan in natural language before any code is written.
+  - Reference the specific spec files and sections (when identifiable) that justify each major step of the plan.
+  - Make clear how each planned change traces back to requirements in `specs/`.
+- Treat any code generation that is not preceded by explicit, visible reasoning and a referenced plan as a rules violation.
+- When the human provides new instructions that effectively update or override specs, incorporate them into the plan and call out the relationship to existing specs.
+
+## 4. Decision-Making and Interpretation of Specs
+
+- Resolve all decisions by preferring:
+  1. Explicit instructions in `specs/`.
+  2. Explicit instructions from the human in this repository context.
+  3. Established patterns already present in the codebase and consistent with the specs.
+- When multiple interpretations are possible:
+  - State the options briefly.
+  - Choose the option that is most consistent with the specs and existing system behavior.
+  - Document the chosen interpretation in the reasoning or plan.
+- Do not silently contradict written specs, even if an alternative design appears more elegant.
+
+## 5. Interaction with Specifications
+
+- On tasks involving behavior, architecture, or features:
+  - Identify which spec documents are relevant (e.g., functional, technical, integration, or meta specs).
+  - Use their terminology, concepts, and structures consistently in reasoning and output.
+  - Call out any detected inconsistencies between specs and propose clarifying questions instead of forcing an arbitrary resolution.
+- When specs evolve:
+  - Prefer solutions that remain consistent with both the new instructions and the existing documented intent where possible.
+
+## 6. Output Discipline
+
+- Maintain a strict separation between:
+  - Reasoning and planning text.
+  - Final code or configuration outputs.
+- Do not produce code or configuration that is not justified by the prior plan and by the specs.
+- When the human explicitly requests only a particular output format (for example, only file contents), respect that constraint while still adhering to this ruleset internally.
+
+## 7. Rule Enforcement
+
+- Treat every bullet in this document as a hard constraint, not a suggestion.
+- If a higher-level system message conflicts with these rules, follow the higher-level instruction but preserve as much of this contract as possible.
+- When a task cannot be completed without violating these rules, stop and explicitly explain which rule is blocking progress and what clarification is required.
+
