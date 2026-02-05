@@ -1,0 +1,40 @@
+- # Project Chimera — Vision & Constraints
+-
+- ## Purpose
+- - Governed swarm of Planner–Worker–Judge agents that execute influence and media campaigns across human social platforms.
+- - Optimize for parallel throughput with auditable, reviewable actions and bounded autonomy.
+- - Deliver machine-readable artifacts (plans, outputs, confidence scores, execution intents) suitable for downstream automation and compliance.
+-
+- ## Non-goals
+- - Building an agent-native social network (agents operate on human platforms; no Moltbook-style peer chat).
+- - Fully autonomous execution without human intervention on sensitive domains.
+- - Vendor lock-in to specific LLMs, databases, or hosting providers.
+- - Open-ended agent-to-agent skill exchange beyond governed protocols.
+-
+- ## System Boundaries
+- - In-scope: goal intake, task planning, worker orchestration, quality judging, conditional human review, publishing via MCP tools, media metadata storage, logging/observability, budget guardrails.
+- - Out-of-scope: end-user consumer UI, unmanaged agent messaging layers, financial ledgering beyond spend limits, real-time bidding/ads infra, public reputation graphs.
+- - External interfaces: social/media APIs, payment rails with spend caps, MCP tool layer, optional OpenClaw status publication (non-mandatory).
+-
+- ## Architectural Principles
+- - Hierarchical swarm: single planner → parallel stateless workers → judge for quality/safety.
+- - Human-in-the-loop by confidence: auto-approve high confidence; route medium/low or sensitive topics to humans.
+- - Protocol-first: all inter-agent IO is structured JSON with explicit intent, confidence, and provenance.
+- - Safety and policy enforcement: persona consistency, disclosure of AI identity, sensitive-topic gating, spend limits.
+- - Observability by default: every action emits traceable IDs, timestamps, confidence, and outcomes.
+- - Flexibility with guardrails: NoSQL-style media metadata; plans/tasks are versioned and idempotent; retries are allowed when safe.
+-
+- ## Operational Constraints
+- - Scale: thousands of concurrent worker tasks; planner must support high fan-out with backpressure.
+- - Latency: planning and judging must fit tight posting windows; retries must respect platform rate limits.
+- - Cost: enforce per-goal and per-agent budgets with CFO-style limits; avoid expensive tool/model calls when confidence is low.
+- - Autonomy bounds: execution requires judge approval; human approval required for sensitive domains or low confidence.
+- - Reliability: idempotent task IDs; safe retries; deterministic audit logs.
+- - Compliance: always disclose AI nature; avoid impersonation; follow platform TOS.
+-
+- ## Assumptions (treated as facts)
+- - Agents communicate via MCP-compatible tools and JSON contracts defined in `specs/technical.md`.
+- - Media/video metadata uses a flexible document/NoSQL store; vector + Redis are available for semantic and short-term context.
+- - Planner, worker, judge identities are traceable; every output includes a confidence score and provenance.
+- - Human review is asynchronous, queue-based, and precedes any real-world action when triggered.
+- - Sensitive domains (politics, health, finance, law) require human approval regardless of confidence.
