@@ -1,0 +1,143 @@
+- # Technical Specification
+-
+- ## A. API Contracts (Agent Internal JSON)
+-
+- ### 1) Goal → Plan Request
+- ```json
+- {
+-   "requestId": "uuid",
+-   "goal": {
+-     "id": "goal-uuid",
+-     "title": "Increase engagement for product X",
+-     "constraints": {
+-       "budgetUsd": 5000,
+-       "deadline": "2026-02-20T00:00:00Z",
+-       "persona": "brand-safe upbeat"
+-     }
+-   },
+-   "context": {
+-     "trends": [{"source": "news", "tag": "productX", "score": 0.82}],
+-     "historyRefs": ["mem://vector/goal-uuid"]
+-   }
+- }
+- ```
+- - Required: `requestId`, `goal.id`, `goal.title`. Optional: `constraints`, `context`.
+- - Response: `{ "planId": "uuid", "tasks": [Task], "createdAt": "...", "version": 1 }`
+- - Error: `{ "error": { "code": "INVALID_GOAL", "message": "...", "details": {...} } }`
+-
+- ### 2) Task Assignment (Planner → Worker)
+- ```json
+- {
+-   "taskId": "task-uuid",
+-   "planId": "plan-uuid",
+-   "type": "generate_video_caption",
+-   "inputs": {
+-     "prompt": "30s launch teaser",
+-     "assets": [{"mediaId": "vid-123", "url": "s3://..."}],
+-     "persona": "brand-safe upbeat"
+-   },
+-   "constraints": {
+-     "budgetUsd": 50,
+-     "maxLatencySec": 120
+-   },
+-   "retry": { "attempt": 1, "maxAttempts": 3 },
+-   "trace": { "requestId": "uuid" }
+- }
+- ```
+- - Required: `taskId`, `planId`, `type`, `inputs`. Optional: `constraints`, `retry`.
+- - Worker Response (success): `{ "taskId": "...", "status": "succeeded", "output": {...}, "confidence": 0.7, "costUsd": 1.2, "startedAt": "...", "endedAt": "..." }`
+- - Worker Response (failure): `{ "taskId": "...", "status": "failed", "error": { "code": "TOOL_ERROR", "message": "...", "details": {...} }, "retryable": true }`
+-
+- ### 3) Worker Output → Judge
+- ```json
+- {
+-   "taskId": "task-uuid",
+-   "planId": "plan-uuid",
+-   "output": {
+-     "type": "video_caption",
+-     "content": "Ready for launch? Watch now.",
+-     "mediaRefs": ["vid-123"]
+-   },
+-   "evidence": {
+-     "sources": [{"url": "https://...", "type": "link"}],
+-     "safetyChecks": [{"rule": "no-medical-claims", "passed": true}]
+-   },
+-   "confidence": 0.68,
+-   "costUsd": 1.2
+- }
+- ```
+- - Judge Response: `{ "taskId": "...", "decision": "approve|retry|escalate", "confidence": 0.74, "rationale": "clear CTA", "riskFlags": ["persona-drift"], "route": "human_review|auto" }`
+-
+- ### 4) Judge → Human Review Queue
+- ```json
+- {
+-   "reviewId": "rev-uuid",
+-   "taskId": "task-uuid",
+-   "planId": "plan-uuid",
+-   "asset": { "type": "video_caption", "content": "..." },
+-   "rationale": "sensitive topic: finance",
+-   "confidence": 0.42,
+-   "requestedAction": "approve|reject|edit",
+-   "expiresAt": "2026-02-06T00:00:00Z"
+- }
+- ```
+- - Human Response: `{ "reviewId": "...", "decision": "approve|reject|request_changes", "notes": "...", "approvedPayload": {...}, "timestamp": "..." }`
+-
+- ### 5) Execution Intent (Planner → Execution Layer via MCP Tool)
+- ```json
+- {
+-   "intentId": "exec-uuid",
+-   "taskId": "task-uuid",
+-   "action": "post|reply|upload_video|transfer_funds",
+-   "target": { "platform": "youtube", "channelId": "abc123" },
+-   "payload": { "content": "text or media ref", "mediaRefs": ["vid-123"] },
+-   "budgetUsd": 20,
+-   "approvedBy": "judge|human",
+-   "idempotencyKey": "exec-uuid",
+-   "trace": { "planId": "plan-uuid", "reviewId": "rev-uuid?" }
+- }
+- ```
+- - Execution Response: `{ "intentId": "...", "status": "accepted|executed|failed", "externalRef": "platform-post-id", "error": {...}? }`
+-
+- ### 6) Error Object (common)
+- ```json
+- { "error": { "code": "STRING_UPPER_SNAKE", "message": "human-readable", "details": {} } }
+- ```
+- - Retry guidance: include `retryable: true|false`, `backoffSec`.
+-
+- ### Idempotency & Retries
+- - All request/plan/task/intent IDs are UUIDs and act as idempotency keys.
+- - Workers may be re-run when `retryable=true`; execution intents must be safe to replay when idempotencyKey is reused.
+- - Judge decisions are immutable; new decisions require a new `reviewId` or `intentId`.
+-
+- ## B. Data Model (Logical)
+-
+- ### Entities
+- - Goal: `goalId`, `title`, `constraints {budgetUsd, deadline, persona}`, `status`, `createdAt`.
+- - Plan: `planId`, `goalId`, `version`, `tasks[]`, `status`, `createdAt`, `updatedAt`.
+- - Task: `taskId`, `planId`, `type`, `inputs`, `constraints`, `status (pending|running|succeeded|failed)`, `attempt`, `maxAttempts`, `workerId?`, `startedAt`, `endedAt`.
+- - AgentOutput: `taskId`, `type`, `content`, `mediaRefs[]`, `evidence`, `confidence`, `costUsd`, `createdAt`.
+- - Evaluation (Judge): `evaluationId`, `taskId`, `decision`, `confidence`, `rationale`, `riskFlags[]`, `route`, `createdAt`.
+- - HumanReview: `reviewId`, `taskId`, `planId`, `assetSnapshot`, `decision`, `notes`, `reviewer`, `createdAt`, `resolvedAt`.
+- - ExecutionIntent: `intentId`, `taskId`, `action`, `target`, `payload`, `budgetUsd`, `approvedBy`, `idempotencyKey`, `status`, `externalRef`, `createdAt`, `updatedAt`.
+- - MediaAsset (video/media metadata): `mediaId`, `planId?`, `campaignId?`, `status (draft|reviewed|approved|published)`, `qualityTier`, `durationSec?`, `thumbnails[]`, `embeddingsRef`, `tags[]`, `costUsd?`, `timestamps {created, updated, published}`, `arbitraryMetadata {}`.
+- - TrendFeedItem: `trendId`, `source`, `tag`, `score`, `capturedAt`, `payload {}`.
+- - Trace/Audit Log: `traceId`, `planId`, `taskId`, `intentId`, `actor (planner|worker|judge|human)`, `action`, `timestamp`, `confidence?`, `cost?`, `error?`.
+-
+- ### Relationships (text ERD)
+- - Goal 1—N Plan.
+- - Plan 1—N Task.
+- - Task 1—1 AgentOutput.
+- - Task 1—N Evaluation (judge decisions per attempt).
+- - Task 0/1—1 HumanReview (only when escalated).
+- - Task 0/1—1 ExecutionIntent (only when approved for action).
+- - ExecutionIntent 0/1—1 HumanReview (link via `reviewId` when human-approved).
+- - Plan 1—N MediaAsset (produced assets per plan).
+- - TrendFeedItem N—N Plan (trends referenced by plans).
+- - All entities emit Trace/Audit Log entries with shared IDs.
+-
+- ### Storage Notes
+- - MediaAsset, AgentOutput, Plan, Task stored in a document/NoSQL store to allow flexible fields and rapid updates.
+- - Embeddings references point to vector store; short-term working context cached in Redis.
+- - Audit/Trace logs are append-only and queryable for observability.
+- - Idempotency keys stored to prevent duplicate execution; retries append attempts.
