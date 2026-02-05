@@ -234,4 +234,4 @@ Project Chimera is architected as a **governed swarm of AI agents**: massively p
 
 ## **10. Project Chimera Mind Map**
 
-![Mind Map](assets/project-chimera-mind-map.png)
+![Mind Map](../assets/project-chimera-mind-map.png)
