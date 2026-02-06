@@ -66,6 +66,9 @@ Complete project blueprint following GitHub Spec Kit structure:
 | `specs/_meta.md` | High-level vision, constraints, and project philosophy |
 | `specs/functional.md` | User stories, agent flows, and governance requirements |
 | `specs/technical.md` | API contracts, database schemas, and data models |
+| `specs/ui.md` | UI/UX screens, flows, and component mappings to contracts |
+| `specs/security.md` | Authentication, RBAC, safety pipeline, and financial guardrails |
+| `specs/acceptance_criteria.md` | Gherkin scenarios (Given/When/Then) and performance targets |
 | `specs/openclaw_integration.md` | Agent social network integration strategy |
 
 **Key Specifications**:
@@ -191,6 +194,9 @@ Chimera/
 │   ├── _meta.md                   # Vision, constraints, philosophy
 │   ├── functional.md              # User stories, agent workflows
 │   ├── technical.md               # API contracts, database schema
+│   ├── ui.md                      # UI/UX screens & component mappings
+│   ├── security.md                # Security, RBAC & safety pipeline
+│   ├── acceptance_criteria.md      # Gherkin scenarios & performance targets
 │   └── openclaw_integration.md    # Agent social network integration
 ├── skills/
 │   └── README.md                  # Runtime agent skills (Input/Output contracts)
@@ -248,8 +254,11 @@ Validates that code aligns with architectural specifications.
 3. **`docs/RESEARCH_SUMMARY.md`** - Context on agent social networks
 4. **`specs/functional.md`** - User stories and agent workflows
 5. **`specs/technical.md`** - API contracts and data models
-6. **`skills/README.md`** - Runtime agent capabilities
-7. **`research/tooling_strategy.md`** - Developer tooling ecosystem
+6. **`specs/ui.md`** - UI screens and component design
+7. **`specs/security.md`** - Security mechanisms and safety layer
+8. **`specs/acceptance_criteria.md`** - Verifiable Gherkin scenarios
+9. **`skills/README.md`** - Runtime agent capabilities
+10. **`research/tooling_strategy.md`** - Developer tooling ecosystem
 
 ## CI/CD & Governance Pipeline
 
