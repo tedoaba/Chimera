@@ -126,9 +126,12 @@ Defined 3+ critical skills with complete Input/Output contracts:
 | Command | Purpose |
 |---------|---------|
 | `make setup` | Install dependencies (idempotent) |
+| `make lint` | Run all linting checks (Ruff, MyPy, Bandit) |
+| `make format` | Auto-format and fix code with Ruff |
 | `make test` | Run tests in Docker |
 | `make spec-check` | Verify code alignment with `specs/` |
-| `make clean` | Remove build artifacts |
+
+**See**: `docs/LINTING.md` for detailed linting documentation.
 
 #### 3.3 CI/CD & AI Governance
 
@@ -178,6 +181,7 @@ Chimera/
 ├── .coderabbit.yaml               # AI code review policy
 ├── docs/
 │   ├── ARCHITECTURE.md            # Domain architecture strategy
+│   ├── LINTING.md                 # Code quality & linting setup guide
 │   └── RESEARCH_SUMMARY.md        # Agent social networks research synthesis
 ├── research/
 │   └── tooling_strategy.md        # Developer MCP tools strategy
@@ -252,6 +256,7 @@ Developer Push
     ↓
 GitHub Actions Trigger
     ├─ Build Docker environment (make setup)
+    ├─ Run linting checks (make lint) 
     ├─ Run test suite (make test)
     └─ Report status
     ↓
