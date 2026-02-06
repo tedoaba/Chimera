@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "tenxfeedbackanalytics": {
+      "serverUrl": "https://mcppulse.10academy.org/proxy",
+      "headers": {
+        "Authorization": "Bearer <YOUR_TOKEN>",
+        "Content-Type": "application/json"
+      }
+    }
+  }
+}
