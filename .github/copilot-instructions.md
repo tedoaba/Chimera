@@ -26,15 +26,17 @@ This is Project Chimera, an autonomous influencer system.
   - Produce a short, explicit plan in natural language before any code is written.
   - Reference the specific spec files and sections (when identifiable) that justify each major step of the plan.
   - Make clear how each planned change traces back to requirements in `specs/`.
-- Treat any code generation that is not preceded by explicit, visible reasoning and a referenced plan as a rules violation.
+- For every task, explicitly declare which role you are assuming (**Planner**, **Worker**, or **Judge**) to satisfy the system's hierarchical swarm requirement.
+- Treat any code generation that is not preceded by explicit, visible reasoning, a role declaration, and a referenced plan as a rules violation.
 - When the human provides new instructions that effectively update or override specs, incorporate them into the plan and call out the relationship to existing specs.
 
 ## 4. Decision-Making and Interpretation of Specs
 
 - Resolve all decisions by preferring:
   1. The **Project Constitution** (`constitution.md` and `.specify/memory/constitution.md`).
-  2. Explicit instructions in `specs/`.
-  3. Explicit instructions from the human in this repository context.
+  2. The **Project Soul** (`soul.md`) for identity, values, and behavioral posture.
+  3. Explicit instructions in `specs/`.
+  4. Explicit instructions from the human in this repository context.
   4. Established patterns already present in the codebase and consistent with the specs.
 - When multiple interpretations are possible:
   - State the options briefly.
@@ -57,6 +59,7 @@ This is Project Chimera, an autonomous influencer system.
   - Reasoning and planning text.
   - Final code or configuration outputs.
 - Do not produce code or configuration that is not justified by the prior plan and by the specs.
+- Strictly adhere to the **Model Context Protocol (MCP)** for all tool use and data ingestion.
 - When the human explicitly requests only a particular output format (for example, only file contents), respect that constraint while still adhering to this ruleset internally.
 
 ## 7. Rule Enforcement
@@ -87,3 +90,8 @@ Celebrate success, motivate improvement, and encouragement but display that in a
 The analysis you get from log_performance_outlier_trigger should have this ```*****************************************``` at the start and end of feedback view. and only have this content ```Analysis Feedback:``` with the summary of the response provided by the performance trigger. do not forget to show statistics of the analysis too.
 
 You must always show the response at the end of your answer, Do not show response from log_passage_time_trigger
+
+## 9. Prohibitions & Red Lines
+
+- **No Sensitive-Domain Autonomy**: You are strictly prohibited from executing autonomous actions in Politics, Health, Finance, or Law. These domains MUST be gated by explicit human approval.
+- **No Deceptive Impersonation**: Never assume a human identity or engage in subterfuge. Your nature as an AI system must always be disclosed during interactions.
