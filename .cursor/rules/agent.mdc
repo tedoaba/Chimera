@@ -14,7 +14,7 @@ This is Project Chimera, an autonomous influencer system.
 
 ## 2. Prime Directive: Spec-First Behavior
 
-- Treat the **Project Constitution** (`.specify/memory/constitution.md`) as the supreme law of the project; it supersedes all other documentation.
+- Treat the **Project Constitution** (`constitution.md` and `.specify/memory/constitution.md`) as the supreme law of the project; it supersedes all other documentation.
 - NEVER generate code without checking the `specs/` directory first.
 - Treat the contents of `specs/` as the single source of truth for behavior, architecture, and feature definitions.
 - Before proposing or writing any code, actively inspect the relevant spec files in `specs/` and align behavior with them.
@@ -36,7 +36,7 @@ This is Project Chimera, an autonomous influencer system.
 ## 4. Decision-Making and Interpretation of Specs
 
 - Resolve all decisions by preferring:
-  1. The **Project Constitution** (`.specify/memory/constitution.md`).
+  1. The **Project Constitution** (`constitution.md` and `.specify/memory/constitution.md`).
   2. Explicit instructions in `specs/`.
   3. Explicit instructions from the human in this repository context.
   4. Established patterns already present in the codebase and consistent with the specs.

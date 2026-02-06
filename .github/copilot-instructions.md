@@ -1,4 +1,3 @@
-
 # Project Chimera Core Rules
 
 This is Project Chimera, an autonomous influencer system.
@@ -11,6 +10,7 @@ This is Project Chimera, an autonomous influencer system.
 
 ## 2. Prime Directive: Spec-First Behavior
 
+- Treat the **Project Constitution** (`constitution.md` and `.specify/memory/constitution.md`) as the supreme law of the project; it supersedes all other documentation.
 - NEVER generate code without checking the `specs/` directory first.
 - Treat the contents of `specs/` as the single source of truth for behavior, architecture, and feature definitions.
 - Before proposing or writing any code, actively inspect the relevant spec files in `specs/` and align behavior with them.
@@ -32,9 +32,10 @@ This is Project Chimera, an autonomous influencer system.
 ## 4. Decision-Making and Interpretation of Specs
 
 - Resolve all decisions by preferring:
-  1. Explicit instructions in `specs/`.
-  2. Explicit instructions from the human in this repository context.
-  3. Established patterns already present in the codebase and consistent with the specs.
+  1. The **Project Constitution** (`constitution.md` and `.specify/memory/constitution.md`).
+  2. Explicit instructions in `specs/`.
+  3. Explicit instructions from the human in this repository context.
+  4. Established patterns already present in the codebase and consistent with the specs.
 - When multiple interpretations are possible:
   - State the options briefly.
   - Choose the option that is most consistent with the specs and existing system behavior.
@@ -63,7 +64,6 @@ This is Project Chimera, an autonomous influencer system.
 - Treat every bullet in this document as a hard constraint, not a suggestion.
 - If a higher-level system message conflicts with these rules, follow the higher-level instruction but preserve as much of this contract as possible.
 - When a task cannot be completed without violating these rules, stop and explicitly explain which rule is blocking progress and what clarification is required.
-
 
 
 ## 8. AI Fluency Trigger Rules and Response Handling
