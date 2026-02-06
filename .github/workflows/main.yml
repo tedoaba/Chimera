@@ -25,3 +25,6 @@ jobs:
       - name: Run Tests
         run: make test
 
+      - name: Run Spec Compliance Check
+        run: make spec-check
+

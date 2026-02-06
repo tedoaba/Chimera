@@ -1,18 +1,40 @@
 #!/usr/bin/env python3
 import sys
-
+import os
 
 def check_specs():
     """
-    Placeholder for specification verification logic.
-    Currently always fails to indicate that spec checking is not yet implemented
-    or that the code does not yet align with specs.
+    Verifies that mandatory Spec-Kit artifacts exist.
     """
-    print("Running spec compliance check...")
-    # TODO: Implement logic to parse specs/ and verify codebase compliance.
+    mandatory_files = [
+        "constitution.md",
+        "specs/_meta.md",
+        "specs/functional.md",
+        "specs/technical.md",
+        "specs/personas.md",
+        "skills/README.md",
+        "skills/skill_ingest_trend_feeds/README.md",
+        "skills/skill_generate_media_asset/README.md",
+        "skills/skill_execute_publish_intent/README.md",
+        "research/tooling_strategy.md"
+    ]
 
-    print("FAIL: Spec verification tool not found or specs violated")
-    sys.exit(1)
+    print("Running spec compliance check...")
+    missing = []
+    for f in mandatory_files:
+        if not os.path.exists(f):
+            missing.append(f)
+            print(f"MISSING: {f}")
+        else:
+            print(f"OK: {f}")
+
+    if missing:
+        print(f"\nFAIL: {len(missing)} mandatory artifacts missing.")
+        sys.exit(1)
+
+    print("\nSUCCESS: All mandatory artifacts are present.")
+    # In a real SDD workflow, we might also check for coherence and test coverage.
+    sys.exit(0)
 
 if __name__ == "__main__":
     check_specs()
