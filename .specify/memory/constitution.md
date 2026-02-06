@@ -1,50 +1,61 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT
+Version change: 0.0.0 → 1.0.0
+List of modified principles:
+- Initial drafting of Project Chimera Constitution
+Added sections:
+- I. Spec-Centricity (Source of Truth)
+- II. Mandatory Spec Alignment (Zero-Drift)
+- III. Hierarchical Swarm Governance
+- IV. Human-in-the-Loop Safety Authority
+- V. Deterministic Conflict Resolution
+- Operational Invariants
+- Prohibitions
+Templates requiring updates:
+- .specify/templates/plan-template.md (✅ updated)
+- .specify/templates/spec-template.md (✅ updated)
+- .specify/templates/tasks-template.md (✅ updated)
+Follow-up TODOs:
+- None
+-->
+
+# Project Chimera Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-Centricity (Source of Truth)
+The `specs/` directory is the absolute source of truth for all system behavior, architecture, and governance. No design or implementation decision is valid unless it is explicitly derived from or captured within a specification file. If a conflict exists between the code and the spec, the spec is correct by definition.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Mandatory Spec Alignment (Zero-Drift)
+Implementation without a corresponding, approved, and up-to-date specification is strictly forbidden. Code, infrastructure, and agent logic are downstream artifacts of the specification layer. Any implementation drift must be resolved by either updating the specification (post-ratification) or reverting the implementation to match the spec.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Hierarchical Swarm Governance
+The system must maintain a strict Hierarchical Swarm architecture: Planner -> Worker -> Judge. Every action must follow this lifecycle. No worker agent may initiate external impact without a validated plan from the Planner and a safety/quality validation from the Judge.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Human-in-the-Loop Safety Authority
+Humans serve as the terminal safety and ethical authority. Any action involving sensitive domains (including but not limited to finance, legal, health, and politics) or any action assigned a "Low Confidence" score by the Judge must be gated by explicit human approval. AI agents are prohibited from unilaterally executing high-stakes decisions without human oversight.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Deterministic Conflict Resolution
+Conflicts between competing specifications or requirements are resolved through a hierarchy of precedence:
+1. This Constitution (Global Invariants)
+2. Meta-Specifications (`specs/_meta.md`)
+3. Domain-specific Specifications (Functional/Technical)
+In the event of an unresolvable logical conflict, the Human Orchestrator is the final authority for resolution.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Operational Invariants
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- **Stateless Workers**: Worker agents must be stateless and horizontally scalable; their identity and state must be managed exclusively by the Planner.
+- **Traceability**: Every agent action, decision, and confidence score must be recorded in an immutable audit log.
+- **Protocol Adherence**: All tool use and data ingestion must strictly adhere to the Model Context Protocol (MCP).
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Prohibitions
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- **No Code in Specs**: Specification files must remain implementation-agnostic. They define the *what*, not the *how*.
+- **No Invisible Agents**: All AI agents must disclose their nature in interactions; deceptive identity practices are strictly forbidden.
+- **No Unsampled Impact**: Fully autonomous execution without the possibility of human sampling or override is prohibited.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This Constitution supersedes all other operational practices and guidelines. Amendments to these principles require a formal ratification process involving the Human Orchestrator and updated documentation. All pull requests and system updates must be validated against these principles.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-02-06 | **Last Amended**: 2026-02-06

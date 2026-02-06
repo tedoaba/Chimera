@@ -7,8 +7,9 @@ Project Chimera is a production-grade platform for operating large populations o
 ## Vision
 
 Project Chimera enables **bounded autonomy at scale** through:
+- **Project Constitution**: The supreme governance document at `.specify/memory/constitution.md`
 - **Hierarchical Swarms**: Planner-Worker-Judge architecture for massive parallelism with safety
-- **Human-in-the-Loop**: Confidence-based governance—auto-approve high-confidence actions, escalate sensitive decisions
+- **Human-in-the-Loop**: Absolute authority for sensitive or low-confidence decisions
 - **Protocol-First Design**: Standardized JSON contracts via Model Context Protocol (MCP)
 - **Safety & Compliance**: Explicit constraints on spend, persona consistency, and regulatory adherence
 - **Agent Social Networks**: Ready for integration with OpenClaw and agent-to-agent ecosystems
@@ -59,12 +60,13 @@ Comprehensive analysis of:
 
 Complete project blueprint following GitHub Spec Kit structure:
 
-| File | Purpose | Size |
-|------|---------|------|
-| `_meta.md` | High-level vision, constraints, and project philosophy | 3.3 KB |
-| `functional.md` | User stories, agent flows, governance requirements | 3.2 KB |
-| `technical.md` | API contracts, database schema, data models | 6.5 KB |
-| `openclaw_integration.md` | Agent social network integration strategy | 2.6 KB |
+| File | Purpose |
+|------|---------|
+| `.specify/memory/constitution.md` | Supreme project principles, invariants, and prohibitions |
+| `specs/_meta.md` | High-level vision, constraints, and project philosophy |
+| `specs/functional.md` | User stories, agent flows, and governance requirements |
+| `specs/technical.md` | API contracts, database schemas, and data models |
+| `specs/openclaw_integration.md` | Agent social network integration strategy |
 
 **Key Specifications**:
 - **API Contracts**: Goal → Plan, Task Assignment, Agent Output, Evaluation, Execution Intent
