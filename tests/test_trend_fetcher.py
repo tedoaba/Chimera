@@ -1,5 +1,5 @@
-from typing import Any, Dict, List, get_args, get_origin, get_type_hints
 import inspect
+from typing import Any, get_args, get_origin, get_type_hints
 
 
 def test_trend_ingest_request_contract():
@@ -18,7 +18,7 @@ def test_trend_ingest_request_contract():
       "trace": { "planId": "plan-uuid?", "taskId": "task-uuid?" }
     }
     """
-    import trend_fetcher  # noqa: WPS433 (import inside test for TDD "empty slot")
+    import trend_fetcher  # import inside test for TDD "empty slot"
 
     assert hasattr(trend_fetcher, "TrendIngestRequest")
 
@@ -49,7 +49,7 @@ def test_trend_feed_item_contract():
       "payload": {}
     }
     """
-    import trend_fetcher  # noqa: WPS433
+    import trend_fetcher
 
     assert hasattr(trend_fetcher, "TrendFeedItem")
 
@@ -72,13 +72,13 @@ def test_trend_feed_item_contract():
     args = get_args(payload_hint)
 
     # payload should be a mapping/dict-like of arbitrary JSON
-    assert origin in (dict, Dict, None.__class__) or issubclass(
+    assert origin is dict or issubclass(
         payload_hint, dict
     ), "payload should be a dict-like type"
     if args:
         key_type, value_type = args
         assert key_type in (str, Any)
-        assert value_type is Any or value_type == object
+        assert value_type is Any or value_type is object
 
 
 def test_trend_ingest_response_contract():
@@ -92,7 +92,7 @@ def test_trend_ingest_response_contract():
       "capturedAt": "RFC3339 timestamp"
     }
     """
-    import trend_fetcher  # noqa: WPS433
+    import trend_fetcher
 
     assert hasattr(trend_fetcher, "TrendIngestResponse")
     assert hasattr(trend_fetcher, "TrendFeedItem")
@@ -115,7 +115,7 @@ def test_trend_ingest_response_contract():
 
     origin = get_origin(items_hint)
     args = get_args(items_hint)
-    assert origin in (list, List), "items must be a list type"
+    assert origin is list, "items must be a list type"
     assert args and args[0] is item_type, "items must contain TrendFeedItem elements"
 
 
@@ -125,7 +125,7 @@ def test_fetch_trends_function_signature():
 
     def fetch_trends(request: TrendIngestRequest) -> TrendIngestResponse
     """
-    import trend_fetcher  # noqa: WPS433
+    import trend_fetcher
 
     assert hasattr(trend_fetcher, "TrendIngestRequest")
     assert hasattr(trend_fetcher, "TrendIngestResponse")

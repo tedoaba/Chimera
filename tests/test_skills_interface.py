@@ -1,11 +1,11 @@
-from typing import Any, Dict, List, get_args, get_origin, get_type_hints
 import inspect
+from typing import Any, get_args, get_origin, get_type_hints
 
 
 def _assert_list_of(inner_type, annotated_type, message: str) -> None:
     origin = get_origin(annotated_type)
     args = get_args(annotated_type)
-    assert origin in (list, List), message
+    assert origin is list, message
     assert args and args[0] is inner_type, message
 
 
@@ -26,7 +26,7 @@ def test_skill_ingest_trend_feeds_run_signature_and_contract():
     - TrendFeedItem aligned with technical TrendFeedItem entity.
     - run(request: TrendIngestRequest) -> TrendIngestResponse
     """
-    from skills import skill_ingest_trend_feeds as skill  # noqa: WPS433
+    from skills import skill_ingest_trend_feeds as skill
 
     # Types must exist
     assert hasattr(skill, "TrendIngestRequest")
@@ -59,11 +59,11 @@ def test_skill_ingest_trend_feeds_run_signature_and_contract():
     assert payload_hint is not None
     origin = get_origin(payload_hint)
     args = get_args(payload_hint)
-    assert origin in (dict, Dict) or issubclass(payload_hint, dict)
+    assert origin is dict or issubclass(payload_hint, dict)
     if args:
         key_type, value_type = args
         assert key_type in (str, Any)
-        assert value_type is Any or value_type == object
+        assert value_type is Any or value_type is object
 
     # Response contract
     resp_hints = get_type_hints(response_type)
@@ -106,7 +106,7 @@ def test_skill_generate_media_asset_run_signature_and_contract():
     - MediaGenerationResponse aligned with skills/README.md.
     - run(request: MediaGenerationRequest) -> MediaGenerationResponse
     """
-    from skills import skill_generate_media_asset as skill  # noqa: WPS433
+    from skills import skill_generate_media_asset as skill
 
     assert hasattr(skill, "MediaGenerationRequest")
     assert hasattr(skill, "MediaGenerationResponse")
@@ -164,7 +164,7 @@ def test_skill_execute_publish_intent_run_signature_and_contract():
       error: dict-like matching Error Object contract (optional)
     - run(request: ExecutionIntentRequest) -> ExecutionIntentResponse
     """
-    from skills import skill_execute_publish_intent as skill  # noqa: WPS433
+    from skills import skill_execute_publish_intent as skill
 
     assert hasattr(skill, "ExecutionIntentRequest")
     assert hasattr(skill, "ExecutionIntentResponse")

@@ -28,8 +28,8 @@ COPY pyproject.toml uv.lock ./
 
 # Install project dependencies
 # --frozen: Sync exactly with uv.lock
-# --no-install-project: Don't install the project package itself (since source isn't copied yet)
-RUN uv sync --frozen --no-install-project
+# --all-extras: Install all optional dependencies including [dev] for linting tools
+RUN uv sync --frozen --all-extras --no-install-project
 
 # Default command
 CMD ["pytest"]

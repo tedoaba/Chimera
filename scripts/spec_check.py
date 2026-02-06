@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 
+
 def check_specs():
     """
     Placeholder for specification verification logic.
@@ -9,7 +10,7 @@ def check_specs():
     """
     print("Running spec compliance check...")
     # TODO: Implement logic to parse specs/ and verify codebase compliance.
-    
+
     print("FAIL: Spec verification tool not found or specs violated")
     sys.exit(1)
 

@@ -19,7 +19,9 @@ jobs:
       - name: Build Environment
         run: make setup
 
+      - name: Run Linting Checks
+        run: make lint
+
       - name: Run Tests
         run: make test
-
 

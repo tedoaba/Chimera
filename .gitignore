@@ -194,6 +194,12 @@ cython_debug/
 # Ruff stuff:
 .ruff_cache/
 
+# Black formatter cache
+.black_cache/
+
+# Flake8 cache
+.flake8_cache/
+
 # PyPI configuration file
 .pypirc
 
