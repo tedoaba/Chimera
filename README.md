@@ -13,6 +13,9 @@ Project Chimera enables **bounded autonomy at scale** through:
 - **Safety & Compliance**: Explicit constraints on spend, persona consistency, and regulatory adherence
 - **Agent Social Networks**: Ready for integration with OpenClaw and agent-to-agent ecosystems
 
+
+![Project Chimera Mind Map](assets/project-chimera-mind-map.png)
+
 ## Project Foundation: Completed Tasks
 
 This repository represents the **complete foundational phase** of Project Chimera, following a rigorous three-stage development process:
@@ -43,8 +46,6 @@ Comprehensive analysis of:
   - Redis for short-term operational context
   - Vector DB (Weaviate) for semantic memory
   - NoSQL for high-velocity media metadata
-
-**Includes**: System architecture mind map at `assets/project-chimera-mind-map.png`
 
 #### 1.3 "Golden" Environment Setup
 - **Git Repository**: Initialized with professional `.gitignore`
@@ -210,7 +211,7 @@ Chimera/
 
 ### 1 Clone the Repository
 ```bash
-git clone https://github.com/<your-org>/Chimera.git
+git clone https://github.com/tedoaba/Chimera.git
 cd Chimera
 ```
 
